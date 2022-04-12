@@ -24,8 +24,8 @@ const modal = () => {
     })
 
     const showModal = () => {
-        modal.style.display = "flex";
-        modalOverlay.style.display = "flex";
+        modal.style.display = "block";
+        modalOverlay.style.display = "block";
     };
 
 

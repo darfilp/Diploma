@@ -17,6 +17,24 @@ const sendForm = () => {
     }).then((res) => res.json)
   }
 
+    const validate = (list) => {
+        let success = true;
+
+        list.forEach(input => {
+            if(input.name === "fio" && (/[^а-яА-Я ]/g.test(input.value) || input.value.length < 2)){
+              statusBlock.textContent = "Введите имя"
+            success = false;
+            }
+      
+            if (input.name === "tel" && (!(/^[\+]{0,1}([0-9]{7,16})$/g.test(input.value)) || input.value === "")){
+              statusBlock.textContent = "Введите телефон"
+            success = false;
+            }
+        })
+
+        return success
+    };
+
 
   const submitForm = () => {
     const formData = new FormData(form)
@@ -28,8 +46,8 @@ const sendForm = () => {
     formData.forEach((value, key) => {
       formBody[key] = value
     })
-    
-    sendData(formBody)
+    if (validate(formElements)) {
+          sendData(formBody)
     .then(() => {
       statusBlock.textContent = successText
       formElements.forEach((input) => {
@@ -42,20 +60,12 @@ const sendForm = () => {
       statusBlock.textContent = errorText
     })
   }
-
-  const requiredPhone = () => {
-    formElements.forEach((input) => {
-      if (input.name === 'tel') {
-        input.setAttribute('required', true)
-      }
-    })
-  }
+    }
 
   try {
     if (!form) {
       throw new Error('Верните форму на место!!!!')
     }
-    requiredPhone()
 
     form.addEventListener('submit', (e) => {
       e.preventDefault()
