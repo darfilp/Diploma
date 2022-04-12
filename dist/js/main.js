@@ -50,13 +50,23 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
+/***/ "./modules/helper.js":
+/*!***************************!*\
+  !*** ./modules/helper.js ***!
+  \***************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"animate\": () => (/* binding */ animate)\n/* harmony export */ });\nfunction animate({timing, draw, duration}) {\r\n\r\n  let start = performance.now();\r\n\r\n  requestAnimationFrame(function animate(time) {\r\n    // timeFraction изменяется от 0 до 1\r\n    let timeFraction = (time - start) / duration;\r\n    if (timeFraction > 1) timeFraction = 1;\r\n\r\n    // вычисление текущего состояния анимации\r\n    let progress = timing(timeFraction);\r\n\r\n    draw(progress); // отрисовать её\r\n\r\n    if (timeFraction < 1) {\r\n      requestAnimationFrame(animate);\r\n    }\r\n\r\n  });\r\n}\r\n\r\n\n\n//# sourceURL=webpack:///./modules/helper.js?");
+
+/***/ }),
+
 /***/ "./modules/menu.js":
 /*!*************************!*\
   !*** ./modules/menu.js ***!
   \*************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nconst menu = () => {\n    const links = document.querySelectorAll('.top-menu > ul> li > a');\n\n    links.forEach(link => {\n        link.addEventListener('click', (e) => {\n            e.preventDefault();\n            document.querySelector(link.getAttribute('href')).scrollIntoView({\n            behavior: 'smooth',\n            block: 'start'\n        });\n        })\n    })\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (menu);\n\n//# sourceURL=webpack:///./modules/menu.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helper */ \"./modules/helper.js\");\n\n\nconst menu = () => {\n    let links = document.querySelectorAll('.top-menu > ul> li > a');\n    const menuBtn = document.querySelector('.mob-menu-btn');\n    const mobileMenu = document.querySelector('.mobile-menu');\n    const mobileLinks = mobileMenu.querySelectorAll('ul > li > a');\n    const menuClose = document.querySelector('.mobile-menu-close');\n\n    links = [...links, ...mobileLinks]\n\n    const myanimateClose = () => {\n        ;(0,_helper__WEBPACK_IMPORTED_MODULE_0__.animate)({\n                duration: 1000,\n                timing(timeFraction) {\n                    return timeFraction;\n                },\n                draw(progress) {\n                    mobileMenu.style.right = -400 + 'px';\n                }\n            });\n    };\n\n    document.addEventListener('click', (e) => {\n        if (!e.target.closest('.mob-menu-btn')) {\n            myanimateClose();\n        }\n    })\n\n    menuBtn.addEventListener('click', () => {\n        ;(0,_helper__WEBPACK_IMPORTED_MODULE_0__.animate)({\n                duration: 1000,\n                timing(timeFraction) {\n                    return timeFraction;\n                },\n                draw(progress) {\n                    mobileMenu.style.right = progress * 0 + 'px';\n                }\n            });\n    })\n\n    menuClose.addEventListener('click', () => {\n        myanimateClose();\n    })\n\n    links.forEach(link => {\n        link.addEventListener('click', (e) => {\n            if (e.target.matches('a')) {\n               myanimateClose()\n            }\n            e.preventDefault();\n            document.querySelector(link.getAttribute('href')).scrollIntoView({\n            behavior: 'smooth',\n            block: 'start'\n        });\n\n        })\n    })\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (menu);\n\n//# sourceURL=webpack:///./modules/menu.js?");
 
 /***/ }),
 
