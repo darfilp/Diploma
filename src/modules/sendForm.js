@@ -48,7 +48,9 @@ const sendForm = () => {
         })
 
         if (validate(formElems)) {
+            statusBlock.textContent = loadText
             sendData(formBody).then(data => {
+              statusBlock.textContent = successText
                 formElems.forEach(input => {
                     input.value = ''
                 })
@@ -59,7 +61,7 @@ const sendForm = () => {
                 }, 5000);
             })
         } else {
-            alert('1')
+            statusBlock.textContent = ''
         } 
 
     }) 
