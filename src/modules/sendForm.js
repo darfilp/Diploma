@@ -1,72 +1,69 @@
 const sendForm = () => {
-    const form = document.querySelector('form');
-    const statusBlock = document.createElement('div')
-    const loadText = 'Загрузка...'
-    const errorText = 'Ошибка...'
-    const successText = 'Спасибо!Наш менеджер с вами свяжется.'
+  const form = document.querySelector('form')
+  const statusBlock = document.createElement('div')
+  const loadText = 'Идёт отправка...'
+  const successText = 'Спасибо!Наш менеджер с вами свяжется.'
+  const errorText = 'Ошибка'
+
+  const formElements = form.querySelectorAll('input')
+
+  const sendData = (data) => {
+    return fetch('https://jsonplaceholder.typicode.com/posts', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then((res) => res.json)
+  }
+
+
+  const submitForm = () => {
+    const formData = new FormData(form)
+    const formBody = {}
+
+    statusBlock.textContent = loadText
+    form.append(statusBlock)
+
+    formData.forEach((value, key) => {
+      formBody[key] = value
+    })
     
-    const validate = (list) => {
-        let success = true;
+    sendData(formBody)
+    .then(() => {
+      statusBlock.textContent = successText
+      formElements.forEach((input) => {
+      if (input.name === 'tel' || input.name === 'fio') {
+        input.value = ''
+      }
+    })
+    })
+    .catch(() => {
+      statusBlock.textContent = errorText
+    })
+  }
 
-        list.forEach(input => {
-            if(input.name === "fio" && (/[^а-яА-Я ]/g.test(input.value) || input.value.length < 2)){
-                alert("Правильно введите имя");
-            success = false;
-            }
-      
-            if (input.name === "tel" && (!(/^[\+]{1}([0-9]{11})+$/g.test(input.value)) || input.value === "")){
-                alert("Правильно введите телефон");
-            success = false;
-            }
-        })
+  const requiredPhone = () => {
+    formElements.forEach((input) => {
+      if (input.name === 'tel') {
+        input.setAttribute('required', true)
+      }
+    })
+  }
 
-        return success
-    };
-
-    const sendData = (data) => {
-        return fetch('https://jsonplaceholder.typicode.com/pdffd', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-            "Content-Type": "application/json"
-        }
-        }).then(res => res.json())
-    };
+  try {
+    if (!form) {
+      throw new Error('Верните форму на место!!!!')
+    }
+    requiredPhone()
 
     form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        statusBlock.textContent = loadText;
-        form.append(statusBlock)
+      e.preventDefault()
 
-        const formElems = form.querySelectorAll('.form-control');
-
-        const formData = new FormData(form);
-        const formBody = {};
-
-        formData.forEach((val, key) => {
-            formBody[key] = val;
-        })
-
-        if (validate(formElems)) {
-            statusBlock.textContent = loadText
-            sendData(formBody).then(data => {
-              statusBlock.textContent = successText
-                formElems.forEach(input => {
-                    input.value = ''
-                })
-            }).catch(error => {
-                statusBlock.textContent = errorText
-                setTimeout(() => {
-                    form.removeChild(statusBlock);
-                }, 5000);
-            })
-        } else {
-            statusBlock.textContent = ''
-        } 
-
-    }) 
-
-
-};
-
+      submitForm()
+    })
+  } catch (error) {
+    console.log(error.message)
+  }
+}
 export default sendForm

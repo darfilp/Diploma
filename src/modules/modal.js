@@ -4,8 +4,10 @@ const modal = () => {
     let callbackBtns = document.querySelectorAll('.callback-btn');
     const btnServises = document.querySelector('.button-services');
     const orderBtns = document.querySelectorAll('.services-carousel > div > div > .img-wrapper');
+    const swiperSlider = document.querySelectorAll('.services-carousel > .swiper-slide');
 
-    callbackBtns = [...callbackBtns, btnServises];
+
+    callbackBtns = [...callbackBtns, btnServises, ...swiperSlider];
     
     orderBtns.forEach(btn => {
         btn.addEventListener('click', () => {

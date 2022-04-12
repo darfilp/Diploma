@@ -38,35 +38,6 @@ const slider = () => {
     };
 
     startSlide()
-
-    // text[0].style.opacity = 1;
-    // text[0].style.visibility = 'visible';
-
-
-    // const showSlider = () => {
-    //     text[currentSlide + 1].style.opacity = 1;
-    //     text[currentSlide + 1].style.visibility = 'visible';
-
-    //     sliders[currentSlide].style.display = "none";
-        
-
-    //     currentSlide++
-    //     console.log(currentSlide)
-
-    //     if (currentSlide >= sliders.length) {
-    //         currentSlide = 0;
-    //         sliders.forEach(slider => {
-    //             slider.style.display = '';
-    //         })
-    //     }
-    // };
-
-    // const autoSlider = () => {
-    //     //setInterval(showSlider, 3000)
-    // };
-
-    // autoSlider();
-
 };
 
 export default slider
