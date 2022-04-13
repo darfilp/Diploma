@@ -26,6 +26,10 @@ const slider = () => {
         sliders[currentSlide].style.display = '';
     };
 
+    const stopSlide = () => {
+        clearInterval(idInterval);
+    }
+
     const dots = document.querySelectorAll('.slick-dots > li');
 
     text[0].style.opacity = 1;
@@ -59,6 +63,52 @@ const slider = () => {
     const startSlide = () => {
         idInterval = setInterval(autoSlide, 3000)
     };
+
+    slider.addEventListener('click', (e) => {
+
+        if (!e.target.matches('li')) {
+            return
+        }
+
+        if (dots[currentSlide].classList.contains('slick-active')) {
+            dots[currentSlide].classList.remove('slick-active')
+        }
+
+        text[currentSlide].style.opacity = 0;
+        text[currentSlide].style.visibility = 'hidden';
+
+        prevSlide();
+
+        if (e.target.matches('li')) {
+            dots.forEach((dot, index) => {
+                if (e.target === dot) {
+                    currentSlide = index;
+                }
+            })
+        }
+
+        if (currentSlide >= sliders.length) {
+            currentSlide = 0;
+        }
+
+        nextSlide();
+        dots[currentSlide].classList.add('slick-active')
+        text[currentSlide].style.opacity = 1;
+        text[currentSlide].style.visibility = 'visible';
+        
+    })
+
+    slider.addEventListener('mouseenter', (e) => {
+        if (e.target.matches('li')) {
+            stopSlide()
+        }
+    }, true);
+
+    slider.addEventListener('mouseleave', (e) => {
+        if (e.target.matches('li')) {
+            startSlide();
+        }
+    }, true);
 
     startSlide()
 };

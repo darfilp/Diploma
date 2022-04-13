@@ -839,13 +839,16 @@ hr.white {
 
 /* top slider */
 .top-slider .slick-dots {
+	z-index: 100;
 	position: absolute;
 	bottom: 25px;
 }
 .top-slider .slick-dots li {
+	z-index: 100;
 	border-color: #fff !important;
 }
 .top-slider .slick-dots li.slick-active {
+	z-index: 100;
 	background-color: #fff !important;
 }
 .top-slider {

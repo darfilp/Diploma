@@ -9,12 +9,6 @@ const modal = () => {
 
     callbackBtns = [...callbackBtns, btnServises, ...swiperSlider];
     
-    orderBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            console.log(12)
-        })
-    })
-
 
     document.addEventListener('click', (e) => {
             if (e.target.closest('.modal-overlay') || e.target.closest('.modal-close')) {
@@ -31,8 +25,6 @@ const modal = () => {
 
     callbackBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
-            // console.log(e.target)
-            // console.log(btn)
             showModal();
         })
     })

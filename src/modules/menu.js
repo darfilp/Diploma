@@ -24,11 +24,10 @@ const menu = () => {
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.mob-menu-btn')) {
             myanimateClose();
-        }
-    })
-
-    menuBtn.addEventListener('click', () => {
-        animate({
+        } else if (e.target.closest('.mobile-menu-close')) {
+            myanimateClose();
+        } else if (e.target.closest('.mob-menu-btn')) {
+            animate({
                 duration: 1000,
                 timing(timeFraction) {
                     return timeFraction;
@@ -37,11 +36,9 @@ const menu = () => {
                     mobileMenu.style.right = progress * 0 + 'px';
                 }
             });
+        }
     })
 
-    menuClose.addEventListener('click', () => {
-        myanimateClose();
-    })
 
     links.forEach(link => {
         link.addEventListener('click', (e) => {
